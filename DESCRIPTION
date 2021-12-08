@@ -7,6 +7,24 @@ Maintainer: <jvelez@lji.org>
 Description: More about what it does (maybe more than one line) Use four
     spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
+URL: https://github.com/jvelezmagic/CyTOFHelpers
+BugReports: https://github.com/jvelezmagic/CyTOFHelpers/issues
+Imports: 
+    CATALYST,
+    ComplexHeatmap,
+    cydar,
+    cytofkit2 (>= 0.99.80),
+    dplyr,
+    flowCore,
+    fs,
+    ggplot2,
+    purrr,
+    RColorBrewer,
+    readxl,
+    rlang,
+    SingleCellExperiment,
+    tibble,
+    xlsx
 Suggests: 
     covr,
     knitr,
@@ -15,11 +33,13 @@ Suggests:
     roxygen2,
     sessioninfo,
     styler,
+    systemfonts (<= 1.0.2),
     testthat (>= 3.0.0)
+Remotes: 
+    JinmiaoChenLab/cytofkit2
+biocViews: FlowCytometry, SingleCell, Software
 Config/testthat/edition: 3
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-URL: https://github.com/jvelezmagic/CyTOFHelpers
-BugReports: https://github.com/jvelezmagic/CyTOFHelpers/issues
