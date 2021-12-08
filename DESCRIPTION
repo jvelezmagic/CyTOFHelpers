@@ -23,6 +23,7 @@ Imports:
     readxl,
     rlang,
     SingleCellExperiment,
+    stringr,
     tibble,
     xlsx
 Suggests: 
