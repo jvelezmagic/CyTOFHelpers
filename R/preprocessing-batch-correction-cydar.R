@@ -159,7 +159,7 @@ run_batch_correction <- function(batch_correction_df,
 #'
 #' @examples
 batch_corrected_drop_na <- function(batch_corrected_df) {
-  batch_corrected_results |>
+  batch_corrected_df |>
     dplyr::rowwise(batch, sample) |>
     dplyr::summarize(
       data_x = list(data_x) |>
