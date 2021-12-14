@@ -15,10 +15,6 @@ write_panel(panel, file, ...)
   Arguments passed on to \code{\link[xlsx:write.xlsx]{xlsx::write.xlsx}}
   \describe{
     \item{\code{sheetName}}{a character string with the sheet name.}
-    \item{\code{col.names}}{a logical value indicating if the column names of \code{x}
-are to be written along with \code{x} to the file.}
-    \item{\code{append}}{a logical value indicating if \code{x} should be appended to
-an existing file.  If \code{TRUE} the file is read from disk.}
     \item{\code{password}}{a String with the password.}
   }}
 }
