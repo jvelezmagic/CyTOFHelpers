@@ -34,7 +34,7 @@ Suggests:
     roxygen2,
     sessioninfo,
     styler,
-    systemfonts (<= 1.0.2),
+    systemfonts,
     testthat (>= 3.0.0)
 Remotes: 
     JinmiaoChenLab/cytofkit2
