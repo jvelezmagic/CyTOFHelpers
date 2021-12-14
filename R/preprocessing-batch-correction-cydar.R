@@ -79,8 +79,8 @@ prepare_batch_correction_format <- function(data) {
       batch_x = purrr::map(
         .x = batch_x,
         .f = ~ {
-          purrr::set_names(x = .x, nm = sample) %>%
-            list() %>%
+          purrr::set_names(x = .x, nm = sample) |>
+            list() |>
             purrr::set_names(nm = dplyr::cur_group())
         }
       ),
@@ -88,8 +88,8 @@ prepare_batch_correction_format <- function(data) {
       batch_comp = purrr::map(
         .x = batch_comp,
         .f = ~ {
-          purrr::set_names(x = .x, nm = condition) %>%
-            list() %>%
+          purrr::set_names(x = .x, nm = condition) |>
+            list() |>
             purrr::set_names(nm = dplyr::cur_group())
         }
       ),
