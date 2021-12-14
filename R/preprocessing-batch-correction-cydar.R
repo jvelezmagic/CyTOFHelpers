@@ -149,6 +149,37 @@ run_batch_correction <- function(batch_correction_df,
     )
 }
 
+
+#' Title
+#'
+#' @param batch_corrected_df
+#'
+#' @return
+#' @export
+#'
+#' @examples
+batch_corrected_drop_na <- function(batch_corrected_df) {
+  batch_corrected_results |>
+    dplyr::rowwise(batch, sample) |>
+    dplyr::summarize(
+      data_x = list(data_x) |>
+        purrr::set_names(
+          nm = dplyr::cur_group()[["sample"]]
+        ),
+      data_corrected = data_corrected |>
+        (\(x){
+          na_channels = apply(X = x, MARGIN = 2, FUN = anyNA)
+          data_corrected[, !na_channels]
+        })() |>
+        list() |>
+        purrr::set_names(
+          nm = dplyr::cur_group()[["sample"]]
+        ),
+      .groups = "drop"
+    )
+}
+
+
 #' Save cydar batch corrected results
 #'
 #' @param batch_corrected_df
