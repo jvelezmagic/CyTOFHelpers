@@ -4,7 +4,7 @@
 \alias{plot_batch_corrected_results}
 \title{Plot before and after cydar batch correction}
 \usage{
-plot_batch_corrected_results(batch_corrected_df)
+plot_batch_corrected_results(batch_corrected_df, cols = NULL, ...)
 }
 \arguments{
 \item{output_file}{}

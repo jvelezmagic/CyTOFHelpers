@@ -164,7 +164,7 @@ batch_corrected_drop_na <- function(batch_corrected_df) {
     dplyr::summarize(
       data_corrected = data_corrected |>
         (\(x){
-          na_channels = apply(X = x, MARGIN = 2, FUN = anyNA)
+          na_channels <- apply(X = x, MARGIN = 2, FUN = anyNA)
           data_corrected[, !na_channels]
         })() |>
         list() |>
@@ -228,6 +228,61 @@ save_batch_corrected_results <- function(batch_corrected_df,
 #' @export
 #'
 #' @examples
-plot_batch_corrected_results <- function(batch_corrected_df) {
+plot_batch_corrected_results <- function(batch_corrected_df, cols = NULL, ...) {
+  data_x <- batch_corrected_df |>
+    dplyr::pull(data_x)
 
+  data_corrected <- batch_corrected_df |>
+    dplyr::pull(data_corrected)
+
+  channels <- data_x |>
+    dplyr::first() |>
+    colnames()
+
+  batches <- names(data_corrected)
+
+  if (is.null(cols)) {
+    cols <- scales::hue_pal()(length(data_corrected))
+  }
+
+  for (channel in channels) {
+    before <- list()
+    after <- list()
+
+    for (batch in batches) {
+      before[[batch]] <- data_x[[batch]][, channel]
+      after[[batch]] <- data_corrected[[batch]][, channel]
+    }
+
+    par(mfrow = c(1, 2))
+    cydar::multiIntHist(
+      collected = before,
+      main = channel,
+      cols = cols,
+      ...
+    )
+
+    legend(
+      "topright",
+      legend = names(before),
+      pch = 16,
+      col = cols
+    )
+
+    cydar::multiIntHist(
+      collected = after,
+      main = "Corrected",
+      cols = cols,
+      ...
+    )
+
+    legend(
+      "topright",
+      legend = names(after),
+      pch = 16,
+      col = cols
+    )
+  }
+
+  invisible(batch_corrected_df)
 }
