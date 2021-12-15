@@ -239,7 +239,13 @@ plot_batch_corrected_results <- function(batch_corrected_df, cols = NULL, ...) {
     dplyr::first() |>
     colnames()
 
-  batches <- names(data_corrected)
+  batches <- batch_corrected_df |>
+    dplyr::pull(batch)
+
+  samples <- batch_corrected_df |>
+    dplyr::pull(sample)
+
+  n_batchs <- length(batches)
 
   if (is.null(cols)) {
     cols <- scales::hue_pal()(length(data_corrected))
@@ -249,9 +255,12 @@ plot_batch_corrected_results <- function(batch_corrected_df, cols = NULL, ...) {
     before <- list()
     after <- list()
 
-    for (batch in batches) {
-      before[[batch]] <- data_x[[batch]][, channel]
-      after[[batch]] <- data_corrected[[batch]][, channel]
+    for (i in seq_len(n_batchs)) {
+      current_batch <- batches[i]
+      current_sample <- samples[i]
+
+      before[[current_batch]] <- data_x[[current_sample]][, channel]
+      after[[current_batch]] <- data_corrected[[current_sample]][, channel]
     }
 
     par(mfrow = c(1, 2))
