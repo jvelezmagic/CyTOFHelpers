@@ -24,7 +24,7 @@
 #'   3. scaled_markerwise_heatmap: Matrix scaled without center and then
 #'      rescaled by each marker using [scales::rescale()].
 #'
-#' @examples
+#' @export
 #' @md
 catalyst_expression_heatmaps <- function(sce,
                                          by = "sample_id",
