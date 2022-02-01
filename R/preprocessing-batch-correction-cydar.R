@@ -158,25 +158,48 @@ run_batch_correction <- function(batch_correction_df,
 #' @export
 #'
 #' @examples
-batch_corrected_drop_na <- function(batch_corrected_df) {
-  batch_corrected_df |>
-    dplyr::rowwise(batch, sample) |>
-    dplyr::summarize(
-      data_corrected = data_corrected |>
-        (\(x){
-          na_channels <- apply(X = x, MARGIN = 2, FUN = anyNA)
-          data_corrected[, !na_channels]
-        })() |>
-        list() |>
-        purrr::set_names(
-          nm = dplyr::cur_group()[["sample"]]
-        ),
-      data_x = list(data_x[, colnames(data_corrected)]) |>
-        purrr::set_names(
-          nm = dplyr::cur_group()[["sample"]]
-        ),
-      .groups = "drop"
-    )
+batch_corrected_drop_na <- function(batch_corrected_df, global = TRUE) {
+  if (global) {
+    na_channels <- batch_corrected_df |>
+      dplyr::pull(data_corrected) |>
+      purrr::map(
+        .f = ~ colnames(.x)[apply(X = .x, MARGIN = 2, FUN = anyNA)]
+      ) |>
+      purrr::flatten_chr() |>
+      unique()
+
+    batch_corrected_df |>
+      dplyr::mutate(
+        dplyr::across(
+          .cols = c(data_x, data_corrected),
+          .fns = ~ purrr::map(
+            .x = .x,
+            .f = (\(x){
+              x <- x[, setdiff(colnames(x), na_channels)]
+            })
+          )
+        )
+      )
+  } else {
+    batch_corrected_df |>
+      dplyr::rowwise(batch, sample) |>
+      dplyr::summarize(
+        data_corrected = data_corrected |>
+          (\(x){
+            na_channels <- apply(X = x, MARGIN = 2, FUN = anyNA)
+            data_corrected[, !na_channels]
+          })() |>
+          list() |>
+          purrr::set_names(
+            nm = dplyr::cur_group()[["sample"]]
+          ),
+        data_x = list(data_x[, colnames(data_corrected)]) |>
+          purrr::set_names(
+            nm = dplyr::cur_group()[["sample"]]
+          ),
+        .groups = "drop"
+      )
+  }
 }
 
 

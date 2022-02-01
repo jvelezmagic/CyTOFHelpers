@@ -4,7 +4,7 @@
 \alias{batch_corrected_drop_na}
 \title{Title}
 \usage{
-batch_corrected_drop_na(batch_corrected_df)
+batch_corrected_drop_na(batch_corrected_df, global = TRUE)
 }
 \arguments{
 \item{batch_corrected_df}{}
